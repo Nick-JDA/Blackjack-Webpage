@@ -35,5 +35,48 @@ header p{
     text-decoration: underline;
 }
 .hide{
-    display: none;
+    display: none!important;
+}
+main{
+    flex-wrap: wrap;
+    color: white;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url(../images/Felt-Background.jpg)!important;
+    height: 100vh;
+}
+
+.firsth1{
+    text-align: left;
+}
+.secondh1{
+    text-align: right;
+    align-self: right;
+}
+.flexWidth2{
+    flex-basis: 33%!important;
+    text-decoration: underline;
+}
+.flexWidth3{
+    flex-basis: 33%!important;
+    text-decoration: underline;
+}
+.flexWidth4{
+    flex-basis: 33%!important;
+}
+span{
+    text-decoration: none;
+}
+.gameBtns{
+    max-width: 30ch;
+}
+.test{
+    text-align: center;
+}
+.bordertest{
+    border: solid white!important;
+}
+.inputWidth{
+    max-height: 30px;
+    max-width: 10ch;
 }
