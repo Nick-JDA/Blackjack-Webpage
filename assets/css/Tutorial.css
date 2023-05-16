@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    background-color: #333;
+}
+
+button {
+    background-color: #6fc391;
+    border: solid;
+    border-color: aqua;
+}
+
+header {
+    color: white;
+    border: solid;
+    border-color: aqua;
+}
+
+video {
+    border: solid;
+    border-color: aqua;
+}
