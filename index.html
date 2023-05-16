@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,700;1,200&display=swap"
       rel="stylesheet"
@@ -18,19 +21,53 @@
     <link rel="stylesheet" href="./assets/css/_animations.scss" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Blackjack</title>
-</head>
-<body>
-    <main>
-
+  </head>
+  <header class="d-flex flex-column flexWidth">
+    <h1 class="underline" id="startingHeader">Game Rules</h1>
+    <p>
+      These are the rules for this Blackjack game, you will start with $100(not
+      real money). The minimum bet you can put in is $25, however you are always
+      allowed to bet more than that if you're feeling lucky. You are presented
+      with two buttons below, one button says "Start" game and the other button
+      says "How To Play." In order to start the game click the start game
+      portion and you will begin the main application. On the main application
+      you will be presented with your current amount of money you have to bet
+      and two buttons to the side that will say "Hit" and "Stay." click these
+      respectively depending on what you want to do in the moment where you draw
+      the cards. You will also have a little text box where you can enter how
+      much you want to bet on this hand(remember minimum bet is $25). The
+      currency is used as a score and will be saved once you end the game and
+      presented only if you have a high score. You will also have a button in
+      the bottom right hand corner saying "End Game" click on this when you
+      think your done and want to save your highscore. If you do not know how to
+      play click on the how to play button, it will redirect you to another page
+      with a vidoe on how to play blackjack and display the "book" for
+      blackjack.
+    </p>
+  </header>
+  <body>
+    <main class="d-flex justify-content-center">
+      <div
+        class="d-flex flex-row justify-content-center flex-wrap customeEdits"
+      >
+        <div class="d-flex flex-column flex-wrap gap-2 otherEdits">
+          <button type="click" id="startBtn" class="btn-lg btnHover">
+            <strong>Start</strong>
+          </button>
+          <button type="click" id="tutorialBtn" class="btn-lg btnHover">
+            <strong>How To Play</strong>
+          </button>
+        </div>
+      </div>
     </main>
     <script
-    src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
-    integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
-    crossorigin="anonymous"
-  ></script>
-      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
-</body>
+  </body>
 </html>
