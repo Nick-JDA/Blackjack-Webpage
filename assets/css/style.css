@@ -1,0 +1,39 @@
+body{
+    margin: 0;
+    background-color: #333;
+
+}
+.customeEdits{
+    background-color:  #6fc391;
+    border:solid white!important;
+    border-radius: 20px;
+    min-width: 40ch;
+    min-height: 40ch;
+}
+header{
+    color: white;
+}
+.underline{
+    text-align: center;
+    text-decoration: underline;
+    
+}
+header p{
+    text-align: center;
+    max-width: fit-content;
+    padding-right: 20ch;
+    padding-left: 20ch;
+}
+.otherEdits{
+    justify-content: center;
+}
+.flexWidth{
+    flex-basis: 100%;
+}
+.btnHover:hover{
+    filter: drop-shadow(5px 5px 5px black);
+    text-decoration: underline;
+}
+.hide{
+    display: none;
+}
