@@ -10,8 +10,10 @@ body{
     min-width: 40ch;
     min-height: 40ch;
 }
-header{
-    color: white;
+header {
+    color: #333;
+    border: solid white;
+    background-color: #6fc391;
 }
 .underline{
     text-align: center;
@@ -26,6 +28,9 @@ header p{
 }
 .otherEdits{
     justify-content: center;
+}
+#starterSection{
+    margin-top: 200px;
 }
 .flexWidth{
     flex-basis: 100%;
