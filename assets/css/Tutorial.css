@@ -2,20 +2,46 @@ body {
     margin: 0;
     background-color: #333;
 }
-
+/*#6fc391*/
 button {
-    background-color: #6fc391;
-    border: solid;
-    border-color: aqua;
+    background-color: white;
 }
 
 header {
-    color: white;
-    border: solid;
-    border-color: aqua;
+    color: #333;
+    border: solid white;
+    background-color: #6fc391;
 }
 
 video {
     border: solid;
-    border-color: aqua;
+    border-color: white;
+}
+
+.btnHover:hover{
+    filter: drop-shadow(5px 5px 5px black);
+    text-decoration: underline;
+}
+
+.button-back {
+    border: solid;
+    border-color: white;
+    background-color: #6fc391;
+    border-radius: 20px;
+    min-width: 10ch;
+    min-height: 10ch;
+}
+
+.underline{
+    text-align: center;
+    text-decoration: underline;
+    
+}
+
+div .col {
+    margin-top: 200px;
+}
+
+button {
+    color: #333;
 }
