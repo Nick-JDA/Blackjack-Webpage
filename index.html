@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Blackjack</title>
   </head>
-  <header class="d-flex flex-column flexWidth">
-    <h1 class="underline" id="startingHeader">Game Rules</h1>
+  <header class="d-flex flex-column flexWidth" id="staterHeader">
+    <h1 class="underline">Game Rules</h1>
     <p>
       These are the rules for this Blackjack game, you will start with $100(not
       real money). The minimum bet you can put in is $25, however you are always
@@ -46,19 +46,61 @@
     </p>
   </header>
   <body>
-    <main class="d-flex justify-content-center">
+    <section class="d-flex justify-content-center" id="starterSection">
       <div
         class="d-flex flex-row justify-content-center flex-wrap customeEdits"
       >
         <div class="d-flex flex-column flex-wrap gap-2 otherEdits">
-          <button type="click" id="startBtn" class="btn-lg btnHover">
+          <button id="startBtn" class="btn-lg btnHover">
             <strong>Start</strong>
           </button>
-          <button type="click" id="tutorialBtn" class="btn-lg btnHover">
+          <button id="tutorialBtn" class="btn-lg btnHover">
             <strong>How To Play</strong>
           </button>
         </div>
       </div>
+    </section>
+    
+    
+    
+    <main class="d-flex casinoFelt flex-fill hide" id="Gaming">
+      
+      
+      <div class="d-flex flexWidth">
+        <div class="d-flex flexWidth4 ">
+          <h2>Minimum Bet: $25</h2>
+        </div>
+        <div class="d-flex bordertest flexWidth4 justify-content-center">
+          <h2>Dealer</h2>
+        </div>
+        <div class="d-flex flexWidth4 justify-content-end">
+          <h2>Highscore</h2>
+        </div>
+      </div>
+     
+     
+      <div class="d-flex flexWidth">
+        <div class="d-flex flexWidth4 justify-content-end">
+          <div class="d-flex flex-column">
+          <input type="number" placeholder="Bet" class="inputWidth">
+          <button type="submit" class="btn btn-outline-light inputWidth">submit</button>
+        </div>
+        </div>
+        <div class="d-flex bordertest flexWidth4 justify-content-center">
+          <div class="d-flex flex-column gameBtns gap-2">
+          <h2>Player</h2>
+          <button type="button" class="btn btn-outline-light">Hit</button>
+          <button type="button" class="btn btn-outline-light">Stay</button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+        <div class="d-flex align-self-end justify-content-end ">
+          <button type="button" class="btn btn-outline-light">End Game</button>
+        </div>
+      </div>
+    </div>
+    
+
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
