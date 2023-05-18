@@ -34,6 +34,7 @@ var inputForm = $('#inputForm');
 var userInputBet = $('#userInputBet');
 
 var totalMoney = 100;
+totalMoneyText.text(totalMoney);
 var bet;
 
 var highscore;
@@ -89,6 +90,8 @@ async function shuffle(){
 }
 async function everyoneDraw(){                    //--------------------------------------------everyone draw
     
+    betBtn.off('submit');
+
     totalMoney = totalMoney - bet;
 
     var responseOne = await fetch(shuffleDeck);
@@ -177,13 +180,17 @@ function cardValuesPlayer(card){
 }
 function cardValuesDealer(card){
     
-   if(isNaN(card)){
-    if(card == 'ACE'){
-        return 11;
-    }
-    return 10;
-   }
-   return parseInt(card);
+    if(isNaN(card)){
+        if(card == 'ACE'){
+            if(playerCount + 11 > 21){
+                return 1;
+            }else{
+                return 11;
+            }
+        }
+        return 10;
+       }
+       return parseInt(card);
 }
 async function playerDraw(){                     //-----------------------------------------playerdraw
 
@@ -209,20 +216,19 @@ async function dealerDraw(){                  //--------------------------------
     
 
         dealerCountText.text(dealerCount); 
-        // var responseSeven = await fetch(drawCard + '1');
-        // var dataRepeatTwo = await responseSeven.json();
-        // console.log(dataRepeatTwo);
         dealerImage1.addClass('hide');
         hiddencard.removeClass('hide');
 
     
-    while(dealerCount <= 17){
+    while(dealerCount < 17){
         var responseTwo = await fetch(drawCard + '1');
         var dataRepeat = await responseTwo.json();
         console.log(dataRepeat);
         var dealerHitImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataRepeat.cards[0].image);
         dealerEmptyDiv.append(dealerHitImage);
         dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     winOrLose();
@@ -294,7 +300,7 @@ function displayHighscore(){
 
 
     highscoreBox.empty();
-    var unorderHighscoreList = $('<ol></ol>');
+    var unorderHighscoreList = $('<ul></ul>');
 
     highscorelocalStroage.forEach(function(score) {
         var listHighscore = $('<li></li>').text(`${score.userName}: ${score.highscore}`);
@@ -312,4 +318,3 @@ endBtn.on('click', end)
 startBtn.on('click', displayGame)
 tutorialBtn.on('click', tutorialPage)
 highscoreForm.on('submit', saveHighscore);
-
