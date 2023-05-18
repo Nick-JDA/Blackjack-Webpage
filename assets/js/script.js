@@ -87,7 +87,7 @@ async function shuffle(){
 
 
 }
-async function everyoneDraw(){
+async function everyoneDraw(){                    //--------------------------------------------everyone draw
     
     totalMoney = totalMoney - bet;
 
@@ -117,19 +117,19 @@ async function everyoneDraw(){
 
         if(i < dataTwo.cards.length){
             if(i == 0){
-                var playerImage = $('<img class="fixImages">').attr('src', dataTwo.cards[i].image);
+                var playerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 playerEmptyDiv.append(playerImage);
                 playerCount += cardValuesPlayer(dataTwo.cards[i].value);
             }else if(i == 1){
-                var dealerImage = $('<img class="fixImages">').attr('src', dataTwo.cards[i].image);
+                var dealerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 dealerEmptyDiv.append(dealerImage);
                 dealerCount += cardValuesDealer(dataTwo.cards[i].value);
             }else if(i == 2){
-                var playerImage = $('<img class="fixImages">').attr('src', dataTwo.cards[i].image);
+                var playerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 playerEmptyDiv.append(playerImage);
                 playerCount += cardValuesPlayer(dataTwo.cards[i].value);
             }else{
-                dealerImage1 = $('<img class="fixImages">').attr('src', './assets/images/backOfCard.png');
+                dealerImage1 = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', './assets/images/backOfCard.png');
                 dealerEmptyDiv.append(dealerImage1);
                 dealerCount += cardValuesDealer(dataTwo.cards[i].value);
                 hiddencard = $('<img class="fixImages hide">').attr('src', dataTwo.cards[i].image);
@@ -185,7 +185,7 @@ function cardValuesDealer(card){
    }
    return parseInt(card);
 }
-async function playerDraw(){
+async function playerDraw(){                     //-----------------------------------------playerdraw
 
     playerCountText.text(playerCount);
     
@@ -194,7 +194,7 @@ async function playerDraw(){
     var dataTwo = await responseTwo.json();
     console.log(dataTwo);
 
-    var playImageOnHit = $('<img class="fixImages">').attr('src', dataTwo.cards[0].image);
+    var playImageOnHit = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[0].image);
     playerEmptyDiv.append(playImageOnHit);
     playerCount += cardValuesPlayer(dataTwo.cards[0].value);
     
@@ -205,7 +205,7 @@ async function playerDraw(){
     console.log(playerCount);
     return playerCount;
 }
-async function dealerDraw(){
+async function dealerDraw(){                  //-------------------------------------dealer draw
     
 
         dealerCountText.text(dealerCount); 
@@ -220,7 +220,7 @@ async function dealerDraw(){
         var responseTwo = await fetch(drawCard + '1');
         var dataRepeat = await responseTwo.json();
         console.log(dataRepeat);
-        var dealerHitImage = $('<img class="fixImages">').attr('src', dataRepeat.cards[0].image);
+        var dealerHitImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataRepeat.cards[0].image);
         dealerEmptyDiv.append(dealerHitImage);
         dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
     }
