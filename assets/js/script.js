@@ -5,21 +5,50 @@ var starterSection = $('#starterSection');
 var game = $('#Gaming');
 var dealerEmptyDiv = $('#dealerEmptyDiv');
 var playerEmptyDiv = $('#playerEmptyDiv');
+var startingDiv = $('#startingDiv');
+var playerCountText = $('#playerCountText');
+var dealerCountText = $('#dealerCountText');
+var totalMoneyText = $('#totalMoneyText');
+var thisModal = $('#Modal');
 
 var hitBtn = $('#hitBtn');
 var stayBtn = $('#stayBtn');
 var endBtn = $('#endBtn');
 
 var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6';
-var drawCard = 'https://deckofcardsapi.com/api/deck/9p9wht4mwpnt/draw/?count=';
-var reshuffle = 'https://deckofcardsapi.com/api/deck/9p9wht4mwpnt/shuffle/?remaining=true';
-var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/9p9wht4mwpnt/return/';
-var retrunToPile = 'https://deckofcardsapi.com/api/deck/9p9wht4mwpnt/pile/<<pile_name>>/return/';
+var drawCard = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/draw/?count=';
+var reshuffle = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/shuffle/?remaining=true';
+var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/return/';
+var retrunToPile = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/pile/<<pile_name>>/return/';
 
 var redirectedUrl = './Tutorial.html';
 
 var playerCount = 0;
 var dealerCount = 0;
+
+var dealerImage1;
+var hiddencard;
+
+var betBtn = $('#betBtn');
+var inputForm = $('#inputForm');
+var userInputBet = $('#userInputBet');
+
+var totalMoney = 100;
+var bet;
+
+var highscore;
+var highscoreBox = $('#highscoreBox');
+
+var highscoreForm = $('<form class="d-flex flex-column justify-content-center align-item-center gap-2 hide"></form>');
+var highscoreInput = $('<input placeholder="Enter Name" class="hide"></input>');
+var highscoreBtn = $('<button type="submit" class="btn-lg btnHover hide">Save Score</button>');
+    
+startingDiv.append(highscoreForm);
+ highscoreForm.append(highscoreInput);
+highscoreForm.append(highscoreBtn);
+
+var highscorelocalStroage = JSON.parse(localStorage.getItem("prevScore")) || [];
+
 
 
 
@@ -29,10 +58,20 @@ async function displayGame(){
     game.removeClass('hide');
     
     hitBtn.off('click');
-    stayBtn.off('click');
-
-    everyoneDraw()
+    stayBtn.off('click');    
 }
+function handleForm(event){
+    event.preventDefault();
+    bet = parseInt(userInputBet.val());
+    console.log(bet);
+     if(bet > totalMoney){
+        console.log(bet);
+        $("#myInput").modal('show');
+        return;
+     }
+    everyoneDraw();
+}
+
 function tutorialPage(){
     location.replace(redirectedUrl);
 }
@@ -50,6 +89,8 @@ async function shuffle(){
 }
 async function everyoneDraw(){
     
+    totalMoney = totalMoney - bet;
+
     var responseOne = await fetch(shuffleDeck);
     var dataOne = await responseOne.json();
     console.log(dataOne);
@@ -57,8 +98,24 @@ async function everyoneDraw(){
     var responseTwo = await fetch(drawCard + '4');
     var dataTwo = await responseTwo.json();
     console.log(dataTwo);
-    for(i = 0; i<dataTwo.cards.length; i++){
 
+    
+    var i = 0;
+   
+    
+    playerEmptyDiv.empty();
+    dealerEmptyDiv.empty();
+    playerCount = 0;
+    dealerCount = 0;
+    playerCountText.text(playerCount);
+    dealerCountText.text(dealerCount);  
+    totalMoneyText.text(totalMoney);
+
+    var drawInterval = setInterval(function() {
+
+        
+
+        if(i < dataTwo.cards.length){
             if(i == 0){
                 var playerImage = $('<img class="fixImages">').attr('src', dataTwo.cards[i].image);
                 playerEmptyDiv.append(playerImage);
@@ -72,27 +129,36 @@ async function everyoneDraw(){
                 playerEmptyDiv.append(playerImage);
                 playerCount += cardValuesPlayer(dataTwo.cards[i].value);
             }else{
-                var dealerImage = $('<img class="fixImages">').attr('src', './assets/images/backOfCard.png');
-                dealerEmptyDiv.append(dealerImage);
+                dealerImage1 = $('<img class="fixImages">').attr('src', './assets/images/backOfCard.png');
+                dealerEmptyDiv.append(dealerImage1);
                 dealerCount += cardValuesDealer(dataTwo.cards[i].value);
-                var hiddencard = $('<img class="fixImages hide">').attr('src', dataTwo.cards[i].image);
+                hiddencard = $('<img class="fixImages hide">').attr('src', dataTwo.cards[i].image);
+                dealerEmptyDiv.append(hiddencard);
             }
-    }
-  
-    console.log(dealerCount);
-    console.log(playerCount);
+
+            i++;
+            playerCountText.text(playerCount);
+
+        }else{
+
+            clearInterval(drawInterval);
+
+            console.log(dealerCount);
+            console.log(playerCount);
     
-    if (playerCount < 21) {
-        hitBtn.on('click', playerDraw);
-        stayBtn.on('click', dealerDraw);
-    } else if (playerCount > 21) {
-        winOrLose();
-    } else if (playerCount === 21) {
-        hitBtn.off('click');
-        stayBtn.off('click');
-        dealerDraw();
-    }
-   
+            if (playerCount < 21) {
+                playerCountText.text(playerCount);
+                hitBtn.on('click', playerDraw);
+                stayBtn.on('click', dealerDraw);
+            } else if (playerCount > 21) {
+                winOrLose();
+            } else if (playerCount === 21) {
+                hitBtn.off('click');
+                stayBtn.off('click');
+                dealerDraw();
+            }
+}
+},1000)
 
 }
 function cardValuesPlayer(card){
@@ -108,8 +174,6 @@ function cardValuesPlayer(card){
         return 10;
        }
        return parseInt(card);
-
-
 }
 function cardValuesDealer(card){
     
@@ -122,6 +186,9 @@ function cardValuesDealer(card){
    return parseInt(card);
 }
 async function playerDraw(){
+
+    playerCountText.text(playerCount);
+    
 
     var responseTwo = await fetch(drawCard + '1');
     var dataTwo = await responseTwo.json();
@@ -140,71 +207,109 @@ async function playerDraw(){
 }
 async function dealerDraw(){
     
+
+        dealerCountText.text(dealerCount); 
+        // var responseSeven = await fetch(drawCard + '1');
+        // var dataRepeatTwo = await responseSeven.json();
+        // console.log(dataRepeatTwo);
+        dealerImage1.addClass('hide');
+        hiddencard.removeClass('hide');
+
+    
     while(dealerCount <= 17){
-    var responseTwo = await fetch(drawCard + '1');
-    var dataRepeat = await responseTwo.json();
-    console.log(dataRepeat);
-    var dealerHitImage = $('<img class="fixImages">').attr('src', dataRepeat.cards[0].image);
-    dealerEmptyDiv.append(dealerHitImage);
-    dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
+        var responseTwo = await fetch(drawCard + '1');
+        var dataRepeat = await responseTwo.json();
+        console.log(dataRepeat);
+        var dealerHitImage = $('<img class="fixImages">').attr('src', dataRepeat.cards[0].image);
+        dealerEmptyDiv.append(dealerHitImage);
+        dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
     }
 
     winOrLose();
 }
 function winOrLose() {
+
+            playerCountText.text(playerCount);
+            dealerCountText.text(dealerCount);
+
+
         if (playerCount > 21) {
-            alert('You Lose');
-        } else if (dealerCount > 21) {
-            alert('You Win');
-        } else if (playerCount > dealerCount) {
-            alert('You Win');
+            totalMoney = totalMoney;
+            totalMoneyText.text(totalMoney);
+            return totalMoney;
+        } else if (dealerCount > 21 || playerCount > dealerCount) {
+            totalMoney = totalMoney + bet*2;
+            totalMoneyText.text(totalMoney);
+            return totalMoney;
         } else if (playerCount === dealerCount) {
-            alert('It\'s a Tie');
+            totalMoney = totalMoney + bet;
+            totalMoneyText.text(totalMoney);
+            return totalMoney;
         } else {
-            alert('You Lose');
+            totalMoney = totalMoney;
+            totalMoneyText.text(totalMoney);
+            if(totalMoney<25){
+                end();
+            }
+            return totalMoney;
         }
     }
 function end(){
+    starterSection.removeClass('hide');
+    game.addClass('hide');
+    startBtn.addClass('hide');
+    tutorialBtn.addClass('hide');
+   
+    highscoreForm.removeClass('hide');
+    highscoreInput.removeClass('hide');
+    highscoreBtn.removeClass('hide');
+    
+    
+    
+    highscore = totalMoney;
 
+    
 }
-function saveHighscore(){
+function saveHighscore(event){
+    event.preventDefault();
+    
+    var userName = highscoreInput.val();
+    if(userName === ""){
+        return null;
+    }
+    
+    var highscoreObject ={
+        userName,
+        highscore,
+    };
+    highscorelocalStroage.push(highscoreObject);
+    localStorage.setItem("prevScore", JSON.stringify(highscorelocalStroage));
 
+    highscoreInput.val('');
+
+    displayHighscore();    
+    location.reload();
+}
+function displayHighscore(){
+
+
+    highscoreBox.empty();
+    var unorderHighscoreList = $('<ol></ol>');
+
+    highscorelocalStroage.forEach(function(score) {
+        var listHighscore = $('<li></li>').text(`${score.userName}: ${score.highscore}`);
+        unorderHighscoreList.append(listHighscore);
+    });
+    highscoreBox.append(unorderHighscoreList);
 }
 
 
 
+displayHighscore();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+inputForm.on('submit', handleForm)
 endBtn.on('click', end)
 startBtn.on('click', displayGame)
 tutorialBtn.on('click', tutorialPage)
+highscoreForm.on('submit', saveHighscore);
+
