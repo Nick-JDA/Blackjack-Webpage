@@ -2,7 +2,7 @@ body {
     margin: 0;
     background-color: #333;
 }
-/*#6fc391*/
+
 button {
     background-color: white;
 }
@@ -27,7 +27,6 @@ video {
     border: solid;
     border-color: white;
     background-color: #6fc391;
-    border-radius: 20px;
     min-width: 10ch;
     min-height: 10ch;
 }
@@ -44,4 +43,17 @@ div .col {
 
 button {
     color: #333;
+}
+
+#book-card {
+    border: solid;
+    border-color: white;
+    background-color: #6fc391;
+    min-width: 10ch;
+    min-height: 10ch;
+}
+
+.title-card {
+    color: #333;
+    text-decoration: underline;
 }
