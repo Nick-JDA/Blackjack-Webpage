@@ -15,11 +15,11 @@ var hitBtn = $('#hitBtn');
 var stayBtn = $('#stayBtn');
 var endBtn = $('#endBtn');
 
-var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6';
-var drawCard = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/draw/?count=';
-var reshuffle = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/shuffle/?remaining=true';
-var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/return/';
-var retrunToPile = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/pile/<<pile_name>>/return/';
+var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=12';
+var drawCard = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/draw/?count=';
+var reshuffle = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/shuffle/?remaining=true';
+var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/return/';
+var retrunToPile = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/pile/<<pile_name>>/return/';
 
 var redirectedUrl = './Tutorial.html';
 
@@ -66,7 +66,9 @@ function handleForm(event){
     bet = parseInt(userInputBet.val());
     console.log(bet);
      if(bet > totalMoney){
-        console.log(bet);
+        $("#myInput").modal('show');
+        return;
+     }else if(isNaN(bet) || bet === ''){
         $("#myInput").modal('show');
         return;
      }
@@ -127,6 +129,7 @@ async function everyoneDraw(){                    //----------------------------
                 var dealerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 dealerEmptyDiv.append(dealerImage);
                 dealerCount += cardValuesDealer(dataTwo.cards[i].value);
+                dealerCountText.text(dealerCount);  
             }else if(i == 2){
                 var playerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 playerEmptyDiv.append(playerImage);
@@ -154,8 +157,10 @@ async function everyoneDraw(){                    //----------------------------
                 hitBtn.on('click', playerDraw);
                 stayBtn.on('click', dealerDraw);
             } else if (playerCount > 21) {
+                hiddencard.removeClass('hide');
                 winOrLose();
             } else if (playerCount === 21) {
+                hiddencard.removeClass('hide');
                 hitBtn.off('click');
                 stayBtn.off('click');
                 dealerDraw();
@@ -209,10 +214,11 @@ async function playerDraw(){                     //-----------------------------
     playerCountText.text(playerCount);
     
     if(playerCount > 21){
+        hiddencard.removeClass('hide');
         hitBtn.off('click');
         winOrLose()
     }else if(playerCount<21) {
-        hitBtn.on('click', playerDraw)
+        return;
     }
     
 }
@@ -223,27 +229,38 @@ async function dealerDraw(){                  //--------------------------------
         dealerImage1.addClass('hide');
         hiddencard.removeClass('hide');
 
-    
-    while(dealerCount < 17 && dealerCount <=18){
-        var responseTwo = await fetch(drawCard + '1');
-        var dataRepeat = await responseTwo.json();
-        console.log(dataRepeat);
-        var dealerHitImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataRepeat.cards[0].image);
-        dealerEmptyDiv.append(dealerHitImage);
-        dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
-        dealerCountText.text(dealerCount); 
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
+    var dealerDrawingInterval = setInterval(async function(){
 
-    winOrLose();
+        if(dealerCount< 17){
+            hiddencard.removeClass('hide');
+            var responseTwo = await fetch(drawCard + '1');
+            var dataRepeat = await responseTwo.json();
+            var dealerHitImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataRepeat.cards[0].image);
+            dealerEmptyDiv.append(dealerHitImage);
+            dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
+            dealerCountText.text(dealerCount); 
+            return dealerDraw();
+        }else{
+            clearInterval(dealerDrawingInterval);
+            hiddencard.removeClass('hide');
+            winOrLose();
+        }
+        hiddencard.removeClass('hide');
+    }, 1000)
+
 }
 function winOrLose() {
 
+            hiddencard.removeClass('hide');
+
+            hitBtn.off('click');
+            stayBtn.off('click');
             playerCountText.text(playerCount);
             dealerCountText.text(dealerCount);
 
 
         if (playerCount > 21) {
+            hiddencard.removeClass('hide');
             totalMoney = totalMoney;
             totalMoneyText.text(totalMoney);
             return totalMoney;
@@ -256,6 +273,7 @@ function winOrLose() {
             totalMoneyText.text(totalMoney);
             return totalMoney;
         } else {
+            hiddencard.removeClass('hide');
             totalMoney = totalMoney;
             totalMoneyText.text(totalMoney);
             if(totalMoney<25){
