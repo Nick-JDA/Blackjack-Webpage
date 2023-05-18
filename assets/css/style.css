@@ -85,3 +85,7 @@ span{
     max-height: 30px;
     max-width: 23ch;
 }
+.fixImages{
+    width: 150px;
+    height: 200px;
+}
