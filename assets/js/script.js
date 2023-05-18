@@ -16,10 +16,10 @@ var stayBtn = $('#stayBtn');
 var endBtn = $('#endBtn');
 
 var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6';
-var drawCard = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/draw/?count=';
-var reshuffle = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/shuffle/?remaining=true';
-var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/return/';
-var retrunToPile = 'https://deckofcardsapi.com/api/deck/fwny8ntq2lgf/pile/<<pile_name>>/return/';
+var drawCard = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/draw/?count=';
+var reshuffle = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/shuffle/?remaining=true';
+var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/return/';
+var retrunToPile = 'https://deckofcardsapi.com/api/deck/0jh99bawmg5e/pile/<<pile_name>>/return/';
 
 var redirectedUrl = './Tutorial.html';
 
@@ -45,7 +45,7 @@ var highscoreInput = $('<input placeholder="Enter Name" class="hide"></input>');
 var highscoreBtn = $('<button type="submit" class="btn-lg btnHover hide">Save Score</button>');
     
 startingDiv.append(highscoreForm);
- highscoreForm.append(highscoreInput);
+highscoreForm.append(highscoreInput);
 highscoreForm.append(highscoreBtn);
 
 var highscorelocalStroage = JSON.parse(localStorage.getItem("prevScore")) || [];
@@ -194,6 +194,7 @@ function cardValuesDealer(card){
 }
 async function playerDraw(){                     //-----------------------------------------playerdraw
 
+    
     playerCountText.text(playerCount);
     
 
@@ -204,13 +205,16 @@ async function playerDraw(){                     //-----------------------------
     var playImageOnHit = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[0].image);
     playerEmptyDiv.append(playImageOnHit);
     playerCount += cardValuesPlayer(dataTwo.cards[0].value);
+
+    playerCountText.text(playerCount);
     
     if(playerCount > 21){
         hitBtn.off('click');
         winOrLose()
+    }else if(playerCount<21) {
+        hitBtn.on('click', playerDraw)
     }
-    console.log(playerCount);
-    return playerCount;
+    
 }
 async function dealerDraw(){                  //-------------------------------------dealer draw
     
@@ -220,14 +224,14 @@ async function dealerDraw(){                  //--------------------------------
         hiddencard.removeClass('hide');
 
     
-    while(dealerCount < 17){
+    while(dealerCount < 17 && dealerCount <=18){
         var responseTwo = await fetch(drawCard + '1');
         var dataRepeat = await responseTwo.json();
         console.log(dataRepeat);
         var dealerHitImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataRepeat.cards[0].image);
         dealerEmptyDiv.append(dealerHitImage);
         dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
-
+        dealerCountText.text(dealerCount); 
         await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
@@ -270,11 +274,7 @@ function end(){
     highscoreInput.removeClass('hide');
     highscoreBtn.removeClass('hide');
     
-    
-    
     highscore = totalMoney;
-
-    
 }
 function saveHighscore(event){
     event.preventDefault();
