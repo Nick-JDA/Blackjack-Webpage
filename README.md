@@ -11,19 +11,19 @@ N/A
 
 ## Usage
 
-User clicks, start game or how to play button. How to play button redirects the user to a tutorial page with accompanying video of how to play blackjack. When user scrolls down page they will also see a go back button and a blackjack strategy card known as the black jack "book".
-When user clicks go back button they will be brought back to main page. Start game button will begin blackjack game for user. Blackjack game page has a bet, hit, and stay, button for user sto navigate the gameplay.
+User clicks, start game or how to play button. How to play button redirects the user to a tutorial page with accompanying video of how to play blackjack. When user scrolls down tutorial page they will also see a go back button and a blackjack strategy card known as the black jack "book".
+When user clicks go back button they will be brought back to main page. Start game button will begin blackjack game for user. Blackjack game page has a bet, hit, and stay, button for users to navigate the gameplay.
 
 ## Credits
 
 Albi krasniqi 
-Github Link:
+Github Link: https://github.com/Albikras
 
 Jacques Martial Traboulga
-Github Link:
+Github Link: https://github.com/jacquesMartial
 
 Nick Armstrong
-GitHub Link:
+GitHub Link: https://github.com/Nick-JDA
 
 ## License
 
@@ -54,3 +54,17 @@ SOFTWARE.
 GitHub Repo: https://github.com/Nick-JDA/Blackjack-Webpage
 
 ## Screenshot
+
+![alt text](./assets/images/Blackjack%20webpage%20home%20page.png)
+
+
+
+![alt text](./assets/images/Blackjack%20webpage%20tutorial%20page.png)
+
+
+
+![alt text](./assets/images/Blackjack%20webpage%20game%20page.png)
+
+## Video of page usage
+
+![alt text](./assets/images/Blackjack.gif)
