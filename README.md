@@ -51,7 +51,18 @@ SOFTWARE.
 
 ## Links
 
+Deployed App URL: https://nick-jda.github.io/Blackjack-Webpage/
+
 GitHub Repo: https://github.com/Nick-JDA/Blackjack-Webpage
+
+
+## Technologies used
+
+https://getbootstrap.com/
+https://jquery.com/
+https://animate.style/
+https://deckofcardsapi.com/
+https://developers.google.com/youtube/iframe_api_reference
 
 ## Screenshot
 
@@ -64,7 +75,3 @@ GitHub Repo: https://github.com/Nick-JDA/Blackjack-Webpage
 
 
 ![alt text](./assets/images/Blackjack%20webpage%20game%20page.png)
-
-## Video of page usage
-
-![alt text](./assets/images/Blackjack.gif)
