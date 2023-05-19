@@ -34,11 +34,11 @@ var clearBtn = $(
  */
 var shuffleDeck =
   "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=20";
-var drawCard = "https://deckofcardsapi.com/api/deck/evfm6llok2tj/draw/?count=";
+var drawCard = "https://deckofcardsapi.com/api/deck/b5j4e641iyil/draw/?count=";
 var reshuffle =
-  "https://deckofcardsapi.com/api/deck/evfm6llok2tj/shuffle/?remaining=true";
+  "https://deckofcardsapi.com/api/deck/b5j4e641iyil/shuffle/?remaining=true";
 var returnDrawnCards =
-  "https://deckofcardsapi.com/api/deck/evfm6llok2tj/return/?cards=";
+  "https://deckofcardsapi.com/api/deck/b5j4e641iyil/return/?cards=";
 
 var redirectedUrl = "./Tutorial.html"; //variable for another html
 /**
