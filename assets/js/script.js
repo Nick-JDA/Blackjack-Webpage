@@ -212,6 +212,7 @@ async function dealerDraw(){                  //--------------------------------
         dealerCountText.text(dealerCount); 
         dealerImage1.addClass('hide');
         hiddencard.removeClass('hide');
+        hiddencard.addClass('animate__animated animate__flipInY')
 
     var dealerDrawingInterval = setInterval(async function(){
         shuffle(); 
