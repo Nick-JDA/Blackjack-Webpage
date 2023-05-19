@@ -15,11 +15,10 @@ var hitBtn = $('#hitBtn');
 var stayBtn = $('#stayBtn');
 var endBtn = $('#endBtn');
 
-var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=12';
+var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=20';
 var drawCard = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/draw/?count=';
 var reshuffle = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/shuffle/?remaining=true';
-var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/return/';
-var retrunToPile = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/pile/<<pile_name>>/return/';
+var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/njziqb7zt25z/return/?cards=';
 
 var redirectedUrl = './Tutorial.html';
 
@@ -64,7 +63,6 @@ async function displayGame(){
 function handleForm(event){
     event.preventDefault();
     bet = parseInt(userInputBet.val());
-    console.log(bet);
      if(bet > totalMoney){
         $("#myInput").modal('show');
         return;
@@ -79,25 +77,22 @@ function tutorialPage(){
     location.replace(redirectedUrl);
 }
 async function shuffle(){
-
-    var responseFour = await fetch(returnDrawnCards);
-    var dataFour = await responseFour.json();
-    console.log(dataFour);
+    
+    var getThemBack = returnDrawnCards+ dataTwo
 
     var responseThree = await fetch(reshuffle);
     var dataThree = await responseThree.json();
     console.log(dataThree);
 
-
+    var responseFour = await fetch(returnDrawnCards);
+    var dataFour = await responseFour.json();
+    console.log(dataFour);
 }
 async function everyoneDraw(){                    //--------------------------------------------everyone draw
     
     betBtn.off('submit');
 
     totalMoney = totalMoney - bet;
-
-    var responseOne = await fetch(shuffleDeck);
-    var dataOne = await responseOne.json();
 
     var responseTwo = await fetch(drawCard + '4');
     var dataTwo = await responseTwo.json();
@@ -115,8 +110,6 @@ async function everyoneDraw(){                    //----------------------------
     totalMoneyText.text(totalMoney);
 
     var drawInterval = setInterval(function() {
-
-        
 
         if(i < dataTwo.cards.length){
             if(i == 0){
@@ -138,17 +131,13 @@ async function everyoneDraw(){                    //----------------------------
                 dealerCount += cardValuesDealer(dataTwo.cards[i].value);
                 hiddencard = $('<img class="fixImages hide">').attr('src', dataTwo.cards[i].image);
                 dealerEmptyDiv.append(hiddencard);
+                console.log(dataTwo);
+                
             }
-
             i++;
             playerCountText.text(playerCount);
-
         }else{
-
             clearInterval(drawInterval);
-
-            console.log(dealerCount);
-            console.log(playerCount);
     
             if (playerCount < 21) {
                 playerCountText.text(playerCount);
@@ -197,10 +186,8 @@ function cardValuesDealer(card){
 }
 async function playerDraw(){                     //-----------------------------------------playerdraw
 
-    
     playerCountText.text(playerCount);
     
-
     var responseTwo = await fetch(drawCard + '1');
     var dataTwo = await responseTwo.json();
     console.log(dataTwo);
@@ -211,8 +198,7 @@ async function playerDraw(){                     //-----------------------------
 
     playerCountText.text(playerCount);
     
-    if(playerCount > 21){
-        hiddencard.removeClass('hide');
+    if(playerCount > 21){ 
         hitBtn.off('click');
         winOrLose()
     }else if(playerCount<21) {
@@ -228,7 +214,7 @@ async function dealerDraw(){                  //--------------------------------
         hiddencard.removeClass('hide');
 
     var dealerDrawingInterval = setInterval(async function(){
-
+        shuffle(); 
         if(dealerCount< 17){
             hiddencard.removeClass('hide');
             var responseTwo = await fetch(drawCard + '1');
@@ -236,7 +222,7 @@ async function dealerDraw(){                  //--------------------------------
             var dealerHitImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataRepeat.cards[0].image);
             dealerEmptyDiv.append(dealerHitImage);
             dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
-            dealerCountText.text(dealerCount); 
+            dealerCountText.text(dealerCount);
             return dealerDraw();
         }else{
             clearInterval(dealerDrawingInterval);
@@ -256,21 +242,20 @@ function winOrLose() {
             playerCountText.text(playerCount);
             dealerCountText.text(dealerCount);
 
-
         if (playerCount > 21) {
             totalMoney = totalMoney;
             totalMoneyText.text(totalMoney);
-            shuffle();
+            shuffle(); 
             return totalMoney;
         } else if (dealerCount > 21 || playerCount > dealerCount) {
             totalMoney = totalMoney + bet;
             totalMoneyText.text(totalMoney);
-            shuffle();
+            shuffle(); 
             return totalMoney;
         } else if (playerCount === dealerCount) {
             totalMoney = totalMoney + bet;
             totalMoneyText.text(totalMoney);
-            shuffle();
+            shuffle(); 
             return totalMoney;
         } else {
             totalMoney = totalMoney;
@@ -278,7 +263,7 @@ function winOrLose() {
             if(totalMoney<25){
                 end();
             }
-            shuffle();
+            shuffle(); 
             return totalMoney;
         }
     }
@@ -326,8 +311,6 @@ function displayHighscore(){
     });
     highscoreBox.append(unorderHighscoreList);
 }
-
-
 
 displayHighscore();
 
