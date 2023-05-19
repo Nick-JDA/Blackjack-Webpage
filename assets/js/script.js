@@ -1,3 +1,6 @@
+/**
+ * These are all variables declared from the index.html page from id
+ */
 var startBtn = $('#startBtn');
 var tutorialBtn = $('#tutorialBtn');
 var staterHeader = $('#staterHeader');
@@ -10,54 +13,77 @@ var playerCountText = $('#playerCountText');
 var dealerCountText = $('#dealerCountText');
 var totalMoneyText = $('#totalMoneyText');
 var thisModal = $('#Modal');
-
 var hitBtn = $('#hitBtn');
 var stayBtn = $('#stayBtn');
 var endBtn = $('#endBtn');
-var clearBtn = $('<button type="button" class="btn btn-outline-light gameBtns hide"></button>');
-
-var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=20';
-var drawCard = 'https://deckofcardsapi.com/api/deck/2c3jsay4z72c/draw/?count=';
-var reshuffle = 'https://deckofcardsapi.com/api/deck/2c3jsay4z72c/shuffle/?remaining=true';
-var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/2c3jsay4z72c/return/?cards=';
-
-var redirectedUrl = './Tutorial.html';
-
-var playerCount = 0;
-var dealerCount = 0;
-
-var dealerImage1;
-var hiddencard;
-
 var betBtn = $('#betBtn');
 var inputForm = $('#inputForm');
 var userInputBet = $('#userInputBet');
 
+/**
+ * This variable is being declared and set equal to a button
+ */
+var clearBtn = $('<button type="button" class="btn btn-outline-light gameBtns hide"></button>');
+/**
+ * Declares 4 variables and sets them equal to a set of apis
+ */
+var shuffleDeck = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=20';
+var drawCard = 'https://deckofcardsapi.com/api/deck/evfm6llok2tj/draw/?count=';
+var reshuffle = 'https://deckofcardsapi.com/api/deck/evfm6llok2tj/shuffle/?remaining=true';
+var returnDrawnCards = 'https://deckofcardsapi.com/api/deck/evfm6llok2tj/return/?cards=';
+
+var redirectedUrl = './Tutorial.html';//variable for another html
+/**
+ * declare to variables set them both equal to 0
+ */
+var playerCount = 0;
+var dealerCount = 0;
+/**
+ * declaring 2 vaiables
+ */
+var dealerImage1;
+var hiddencard;
+
+/**
+ * declare 3 variables set one equal to 100 another equal to the text and one jsut declared
+ */
 var totalMoney = 100;
 totalMoneyText.text(totalMoney);
 var bet;
-
+/**
+ * declare 2 variables one set ot and id one just declared
+ */
 var highscore;
 var highscoreBox = $('#highscoreBox');
-
+/**
+ * declared 4 variables and each create an element
+ */
 var highscoreTitle = $('<h2></h2>')
 var highscoreForm = $('<form class="d-flex flex-column justify-content-center align-item-center gap-2 hide"></form>');
 var highscoreInput = $('<input placeholder="Enter Name" class="hide"></input>');
 var highscoreBtn = $('<button type="submit" class="btn-lg btnHover hide">Save Score</button>');
-    
+
+/**
+ * appened a bunch of values
+ */
 startingDiv.append(highscoreTitle, highscoreForm);
 highscoreForm.append(highscoreInput);
 highscoreForm.append(highscoreBtn);
 
+/**
+ * adding text and a class
+ */
 highscoreTitle.text('Save');
 highscoreTitle.addClass('hide');
-
+/**used foor saving to localstorage */
 var highscorelocalStroage = JSON.parse(localStorage.getItem("prevScore")) || [];
 
 
 
-
-async function displayGame(){
+/**
+ * function for displaying the game page hide the starter page reveal the main page
+ */
+function displayGame(){
     staterHeader.addClass('hide');
     starterSection.addClass('hide');
     game.removeClass('hide');
@@ -66,10 +92,14 @@ async function displayGame(){
     hitBtn.off('click');
     stayBtn.off('click');    
 }
+/**
+ * function for handling the form, used to grab the user input and make sure they place a proper input
+ */
 function handleForm(event){
     event.preventDefault();
     
     bet = parseInt(userInputBet.val());
+    console.log(bet)
      if(bet > totalMoney){
         $("#myInput").modal('show');
         return;
@@ -79,14 +109,17 @@ function handleForm(event){
      }
     everyoneDraw();
 }
-
+/**
+ * used to send user to other html
+ */
 function tutorialPage(){
     location.replace(redirectedUrl);
 }
+/**
+ * used to return cards from the api and reshuffle them
+ */
 async function shuffle(){
     
-    var getThemBack = returnDrawnCards+ dataTwo
-
     var responseThree = await fetch(reshuffle);
     var dataThree = await responseThree.json();
     console.log(dataThree);
@@ -95,10 +128,12 @@ async function shuffle(){
     var dataFour = await responseFour.json();
     console.log(dataFour);
 }
-async function everyoneDraw(){                    //--------------------------------------------everyone draw
+/**
+ * A function for drawing cards distrubts cards to the dealer and the user one is initally hidden
+ * and then u are left with the option to either hit(draw a card) or stay(stay with your cards)
+ */
+async function everyoneDraw(){                    
     
-    
-
     betBtn.off('click');
 
     totalMoney = totalMoney - bet;
@@ -106,10 +141,8 @@ async function everyoneDraw(){                    //----------------------------
     var responseTwo = await fetch(drawCard + '4');
     var dataTwo = await responseTwo.json();
 
-    
     var i = 0;
    
-    
     playerEmptyDiv.empty();
     dealerEmptyDiv.empty();
     playerCount = 0;
@@ -124,20 +157,20 @@ async function everyoneDraw(){                    //----------------------------
             if(i == 0){
                 var playerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 playerEmptyDiv.append(playerImage);
-                playerCount += cardValuesPlayer(dataTwo.cards[i].value);
+                playerCount += cardValues(dataTwo.cards[i].value);
             }else if(i == 1){
                 var dealerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 dealerEmptyDiv.append(dealerImage);
-                dealerCount += cardValuesDealer(dataTwo.cards[i].value);
+                dealerCount += cardValues(dataTwo.cards[i].value);
                 dealerCountText.text(dealerCount);  
             }else if(i == 2){
                 var playerImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[i].image);
                 playerEmptyDiv.append(playerImage);
-                playerCount += cardValuesPlayer(dataTwo.cards[i].value);
+                playerCount += cardValues(dataTwo.cards[i].value);
             }else{
                 dealerImage1 = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', './assets/images/backOfCard.png');
                 dealerEmptyDiv.append(dealerImage1);
-                dealerCount += cardValuesDealer(dataTwo.cards[i].value);
+                dealerCount += cardValues(dataTwo.cards[i].value);
                 hiddencard = $('<img class="fixImages hide">').attr('src', dataTwo.cards[i].image);
                 dealerEmptyDiv.append(hiddencard);
                 console.log(dataTwo);
@@ -165,7 +198,11 @@ async function everyoneDraw(){                    //----------------------------
 },1000)
 
 }
-function cardValuesPlayer(card){
+/**
+ * function to grab the value of the card due to the fact the card values are all strings they need to be paserInt
+ * then fixed later
+ */
+function cardValues(card){
 
     if(isNaN(card)){
         if(card == 'ACE'){
@@ -179,21 +216,10 @@ function cardValuesPlayer(card){
        }
        return parseInt(card);
 }
-function cardValuesDealer(card){
-    
-    if(isNaN(card)){
-        if(card == 'ACE'){
-            if(playerCount + 11 > 21){
-                return 1;
-            }else{
-                return 11;
-            }
-        }
-        return 10;
-       }
-       return parseInt(card);
-}
-async function playerDraw(){                     //-----------------------------------------playerdraw
+/**
+ * using an async function to fetch and setting up for the player to draw
+ */
+async function playerDraw(){                     
 
     playerCountText.text(playerCount);
     
@@ -203,7 +229,7 @@ async function playerDraw(){                     //-----------------------------
 
     var playImageOnHit = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataTwo.cards[0].image);
     playerEmptyDiv.append(playImageOnHit);
-    playerCount += cardValuesPlayer(dataTwo.cards[0].value);
+    playerCount += cardValues(dataTwo.cards[0].value);
 
     playerCountText.text(playerCount);
     
@@ -215,7 +241,10 @@ async function playerDraw(){                     //-----------------------------
     }
     
 }
-async function dealerDraw(){                  //-------------------------------------dealer draw
+/**
+ * function for when the dealer draws must be 17 or higher cannot go over 21
+ */
+async function dealerDraw(){                 
     
 
         dealerCountText.text(dealerCount); 
@@ -223,25 +252,30 @@ async function dealerDraw(){                  //--------------------------------
         hiddencard.removeClass('hide');
         hiddencard.addClass('animate__animated animate__flipInY')
 
+        if (dealerCount >= 17) {
+            winOrLose();
+            return;
+          }
     var dealerDrawingInterval = setInterval(async function(){
-        shuffle(); 
-        if(dealerCount< 17){
+        if(dealerCount < 17 && dealerCount <= 21){
             hiddencard.removeClass('hide');
             var responseTwo = await fetch(drawCard + '1');
             var dataRepeat = await responseTwo.json();
             var dealerHitImage = $('<img class="fixImages animate__animated animate__slideInDown">').attr('src', dataRepeat.cards[0].image);
             dealerEmptyDiv.append(dealerHitImage);
-            dealerCount += cardValuesDealer(dataRepeat.cards[0].value);
+            dealerCount += cardValues(dataRepeat.cards[0].value);
             dealerCountText.text(dealerCount);
             return dealerDraw();
         }else{
             clearInterval(dealerDrawingInterval);
             winOrLose();
         }
-        hiddencard.removeClass('hide');
     }, 1000)
 
 }
+/**
+ * detects if hand was either a win or lose agaisnt the dealer
+ */
 function winOrLose() {
 
             hiddencard.removeClass('hide');
@@ -255,33 +289,30 @@ function winOrLose() {
 
         if (playerCount > 21) {
             $("#myBust").modal('show');
-            totalMoney = totalMoney;
             totalMoneyText.text(totalMoney);
-            shuffle(); 
             return totalMoney;
         } else if (dealerCount > 21 || playerCount > dealerCount) {
             $("#myWin").modal('show');
-            totalMoney = totalMoney + bet;
+            totalMoney += (bet * 2);
             totalMoneyText.text(totalMoney);
-            shuffle(); 
             return totalMoney;
         } else if (playerCount === dealerCount) {
             $("#myTie").modal('show');
-            totalMoney = totalMoney + bet;
+            totalMoney += bet;
             totalMoneyText.text(totalMoney);
-            shuffle(); 
             return totalMoney;
         } else {
             $("#myEnding").modal('show');
-            totalMoney = totalMoney;
             totalMoneyText.text(totalMoney);
             if(totalMoney<25){
                 end();
             }
-            shuffle(); 
             return totalMoney;
         }
     }
+    /**
+     * for when you hit the end button to end game
+     */
 function end(){
     starterSection.removeClass('hide');
     game.addClass('hide');
@@ -295,6 +326,9 @@ function end(){
 
     highscore = totalMoney;
 }
+/**
+ * used to save your highscore into localstorage
+ */
 function saveHighscore(event){
     event.preventDefault();
     
@@ -315,6 +349,9 @@ function saveHighscore(event){
     displayHighscore();    
     location.reload();
 }
+/**
+ * used to display your highscore
+ */
 function displayHighscore(){
 
 
@@ -333,8 +370,12 @@ function displayHighscore(){
 
 }
 
-displayHighscore();
+displayHighscore();//calls to function display highscore
 
+
+/**
+ * a bunch of event listeners on is tied to a function to clear the local storage
+ */
 inputForm.on('submit', handleForm)
 endBtn.on('click', end)
 startBtn.on('click', displayGame)
