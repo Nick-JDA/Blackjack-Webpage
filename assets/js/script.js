@@ -98,11 +98,9 @@ async function everyoneDraw(){                    //----------------------------
 
     var responseOne = await fetch(shuffleDeck);
     var dataOne = await responseOne.json();
-    console.log(dataOne);
 
     var responseTwo = await fetch(drawCard + '4');
     var dataTwo = await responseTwo.json();
-    console.log(dataTwo);
 
     
     var i = 0;
@@ -242,7 +240,6 @@ async function dealerDraw(){                  //--------------------------------
             return dealerDraw();
         }else{
             clearInterval(dealerDrawingInterval);
-            hiddencard.removeClass('hide');
             winOrLose();
         }
         hiddencard.removeClass('hide');
@@ -252,6 +249,7 @@ async function dealerDraw(){                  //--------------------------------
 function winOrLose() {
 
             hiddencard.removeClass('hide');
+            dealerImage1.addClass('hide');
 
             hitBtn.off('click');
             stayBtn.off('click');
@@ -260,25 +258,27 @@ function winOrLose() {
 
 
         if (playerCount > 21) {
-            hiddencard.removeClass('hide');
             totalMoney = totalMoney;
             totalMoneyText.text(totalMoney);
+            shuffle();
             return totalMoney;
         } else if (dealerCount > 21 || playerCount > dealerCount) {
-            totalMoney = totalMoney + bet*2;
+            totalMoney = totalMoney + bet;
             totalMoneyText.text(totalMoney);
+            shuffle();
             return totalMoney;
         } else if (playerCount === dealerCount) {
             totalMoney = totalMoney + bet;
             totalMoneyText.text(totalMoney);
+            shuffle();
             return totalMoney;
         } else {
-            hiddencard.removeClass('hide');
             totalMoney = totalMoney;
             totalMoneyText.text(totalMoney);
             if(totalMoney<25){
                 end();
             }
+            shuffle();
             return totalMoney;
         }
     }
