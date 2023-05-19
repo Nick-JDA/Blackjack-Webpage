@@ -78,29 +78,53 @@
             <div class="d-flex flex-column">
           <h2>Dealer:<span id="dealerCountText"></span></h2>
           <div class="d-flex flex-row" id="dealerEmptyDiv">
-
-
           </div>
           </div>
         </div>
         </div>
-        <div class="d-flex flexWidth4 justify-content-end" id="highscoreBox">
-          <h2>Highscore</h2>
+        <div class="d-flex flexWidth4 justify-content-right align-self-right flex-column" id="highscoreBox">
         </div>
       </div>
-      
-      
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button> -->
 
 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="myInput">
   <div class="modal-dialog modal-sm ">
-    <div class="modal-content textColor diff">
-      <p>Your poor!!</p>
+    <div class="modal-content textColor diff text-center">
+      <p>Invalid input, please enter a proper value!</p>
     </div>
   </div>
 </div>
 
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="myBust">
+  <div class="modal-dialog modal-sm ">
+    <div class="modal-content textColor diff text-center">
+      <p>You Went over 21 you lost!</p>
+    </div>
+  </div>
+</div>
 
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="myWin">
+  <div class="modal-dialog modal-sm ">
+    <div class="modal-content textColor diff text-center">
+      <p>You Win!</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="myTie">
+  <div class="modal-dialog modal-sm ">
+    <div class="modal-content textColor diff text-center">
+      <p>You Tied!</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="myEnding">
+  <div class="modal-dialog modal-sm ">
+    <div class="modal-content textColor diff text-center">
+      <p>You Lost!</p>
+    </div>
+  </div>
+</div>
 
      
       <div class="d-flex flexWidth">
@@ -120,8 +144,8 @@
             
 
           </div>
-          <button type="button" class="btn btn-outline-light" id="hitBtn">Hit</button>
-          <button type="button" class="btn btn-outline-light" id="stayBtn">Stay</button>
+          <button type="button" class="btn btn-outline-light gameBtns" id="hitBtn">Hit</button>
+          <button type="button" class="btn btn-outline-light gameBtns" id="stayBtn">Stay</button>
           </div>
         </div>
         <div class="d-flex justify-content-end">
