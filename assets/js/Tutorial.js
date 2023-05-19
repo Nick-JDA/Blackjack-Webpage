@@ -6,4 +6,8 @@ function onYouTubeIframeAPIReady() {
     videoId: 'eyoh-Ku9TCI',
   });
 }
+var returnButton= document.querySelector("#button1");
+returnButton.addEventListener("click",function(){
+  console.log(window.location.href='index.html')
+});
 
